@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    body {
+      font-family: 'Pacifico', cursive;
+      background-image: url("static/background1.webp");
+      background-size: cover;
+      background-color: white;
+    }
+
+    #barchart {
+      width: 70%;
+      height: 90vh;
+      margin: 30px auto;
+    }
+
+    .input-container {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      border: none;
+      border-radius: 20px;
+      outline: none;
+      background-color: white;
+      outline: 2px solid #000;
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+
+    .generate-button {
+      padding: 10px;
+      border: none;
+      border-radius: 20px;
+      background-color: #4caf50;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-left: 30px;
+      margin-top: 20px;
+      display: inline-block;
+    }
+
+    .generate-button:hover {
+      background-color: #45a049;
+    }
+
+    .chart-label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+      color: black;
+      font-weight: bold;
+    }
+
+    .chart-label .word {
+      margin-right: 5px;
+    }
+
+    .chart-bar {
+      background-color: red;
+      height: 30px;
+      margin-bottom: 10px;
+    }
+    
+  </style>
+</head>
+<body>
+  <h1>Panini Pande(1002064144)</h1>
+  <div class="input-container">
+    <label for="tuples">Enter tuples (letter, amount):</label>
+    <input type="text" id="tuples"  />
+    <button  class="generate-button"onclick="generatePieChart()">Submit</button>
+  </div>
+  
+  
+  <div id="barchart"></div>
+  
+  
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+   
+        function generatePieChart() {
+  var input = document.getElementById("tuples").value;
+  var tuples = input.split(",");
+
+  if (tuples.length < 2 || tuples.length > 15) {
+    alert('Please enter between 2 and 15 tuples.');
+    return;
+  }
+
+  var data = [];
+  data.push(["Letter", "Amount"]);
+
+  var totalCount = 0;
+  for (var i = 0; i < tuples.length; i++) {
+    var tuple = tuples[i].trim().split(" ");
+    var letter = tuple[0];
+    var amount = parseInt(tuple[1]);
+
+    data.push([letter, amount]);
+    totalCount += amount;
+  }
+
+  data.sort(function(a, b) {
+    return b[1] - a[1];
+  });
+
+  var options = {
+    title: "Letter Frequency",
+    colors: ['#FF0000'],
+    pieHole: 0.4,
+    pieSliceText: "outside",
+    is3D: true,
+    slices: {
+      textStyle: {
+        color: "black",
+      },
+    },
+  };
+
+  var chart = new google.visualization.BarChart(
+    document.getElementById("barchart")
+  );
+  
+  chart.draw(google.visualization.arrayToDataTable(data), options);
+}
+
+      </script>
+  </body>
+  </html>
+  
+
+ 
+
+
+

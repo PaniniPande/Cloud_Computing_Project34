@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Scatter Chart</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body {
+          font-family: 'Pacifico', cursive;
+			background-image: url("static/background1.webp");
+			background-size: cover;
+			background-color: white;
+        }
+        input[type="text"] {
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+        outline: none;
+        background-color: white ;
+        outline: 2px solid #000; 
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      .submit{
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+        background-color: #4caf50;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-left: 30px; /* Adjust the margin as needed */
+        margin-bottom: 200px;
+        margin-top: 20px;
+        display: inline-block; /* Display the button inline */
+      }
+
+      .submit:hover {
+        background-color: #45a049;
+      } 
+    </style>
+</head>
+<body>
+  <h1>Panini Pande (1002064144)</h1>
+
+  <div>
+  </div>
+    <div>
+        <label for="input">Enter up to 10 {X,Y,C} sets:</label>
+        <input type="text" id="input" placeholder="e.g., X1,Y1,C1 X2,Y2,C2 X3,Y3,C3">
+        <button class="submit" onclick="generateChart()">Generate Chart</button>
+    </div>
+    <div id="chart"></div>
+
+    <script>
+        function generateChart() {
+            // Clear previous chart
+            Plotly.purge('chart');
+
+            // Get user input
+            var input = document.getElementById('input').value;
+            var sets = input.split(' ');
+
+            // Limit to 10 sets
+            if (sets.length > 10) {
+                alert('Please enter up to 10 sets.');
+                return;
+            }
+
+            // Parse {X, Y, C} sets
+            var data = [];
+            var xValues = [];
+            var yValues = [];
+            var colors = [];
+            var colorMap = {
+                1: 'rgb(0, 128, 0)',  // Green
+                2: 'rgb(0, 0, 0)',    // Black
+                3: 'rgb(255, 0, 0)'   // Red
+            };
+
+            for (var i = 0; i < sets.length; i++) {
+                var set = sets[i].split(',');
+
+                if (set.length !== 3) {
+                    alert('Invalid input format for set ' + (i + 1));
+                    return;
+                }
+
+                var x = parseInt(set[0]);
+                var y = parseInt(set[1]);
+                var c = parseInt(set[2]);
+
+                if (isNaN(x) || isNaN(y) || isNaN(c) || x < 0 || x > 60 || y < 0 || y > 60 || c < 1 || c > 3) {
+                    alert('Invalid values for set ' + (i + 1));
+                    return;
+                }
+
+                data.push({ X: x, Y: y, C: c });
+                xValues.push(x);
+                yValues.push(y);
+                colors.push(c);
+            }
+
+            // Generate trace for scatter plot
+            var trace = {
+                x: xValues,
+                y: yValues,
+                mode: 'markers',
+                marker: {
+                    color: colors.map(color => colorMap[color]),
+                    size: 8
+                }
+            };
+
+            // Set up layout options
+            var layout = {
+                xaxis: {
+                    title: 'X',
+                    range: [0, 60]
+                },
+                yaxis: {
+                    title: 'Y',
+                    range: [0, 60]
+                },
+                showlegend: false,
+                
+            };
+            var config = {
+                displayModeBar: false,
+                responsive: true,
+                watermark: false
+            };
+
+            // Create the scatter chart
+            Plotly.newPlot('chart', [trace], layout, config);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      font-family: 'Pacifico', cursive;
+      background-size: cover;
+      background-color: white; 
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 40px;
+    }
+    a {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+      font-style: italic;
+    }
+
+    .navbar-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background-color: black;
+      color: #ffffff;
+      transition: background-color 0.3s ease;
+      opacity: 1;
+      z-index: 1;
+    }
+    
+    .nav__contents {
+      display: flex;
+      justify-content: center;
+    }
+
+    .content {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      background-color: white; 
+    }
+
+    /* Add the pseudo-element for the background animation */
+    .content::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("static/background1.webp");
+  background-size: cover;
+  opacity: 1;
+  animation-name: waveFlipBackground, slideForward;
+  animation-duration: 10s, 1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: both;
+  animation-iteration-count:1;
+  animation-direction: alternate;
+  transform-origin: center bottom;
+  box-shadow: inset 0px -10px 10px -10px rgba(0, 0, 0, 0.8);
+}
+
+/* Define the animations */
+@keyframes waveFlipBackground {
+  0% {
+    transform: scaleY(1) scaleX(1);
+  }
+  50% {
+    transform: scaleY(0.8) scaleX(-1);
+  }
+  100% {
+    transform: scaleY(1) scaleX(1);
+  }
+}
+
+/* @keyframes slideForward {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0%);
+  }
+} */
+
+
+.main {
+  margin-top: 250px; /* Adjust the margin to create space below the navbar */
+  padding: 20px; /* Add some padding to the content */
+  background-color: rgba(255, 255, 255, 0.8); /* Add a transparent background color */
+  mix-blend-mode: multiply;
+}
+
+    table {
+      border-collapse: collapse;
+      margin: 40px auto;
+      width: 300px; /* Increase the column size by adjusting the width value */
+    }
+
+    th,
+    td {
+      border: 1px solid black;
+      padding: 16px;
+      text-align: center;
+    }
+    
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .navbar .home {
+      margin-left: auto;
+      margin-right: 10px; /* Adjust the right margin as needed */
+    }
+    
+    .home-icon {
+    position: fixed;
+    right: 20px;
+    cursor: pointer;
+    width: 30px;
+    background-color: white;
+    top: 20px;
+    transition-timing-function: ease-in;
+transform: all 0.5s;
+
+
+
+    }
+    .home-cloud{
+    position: fixed;
+    left: 20px;
+    width: 30px;
+    background-color: white;
+    top: 20px;
+    }
+   
+  </style>
+</head>
+<body>
+
+  <div class="navbar-container">
+    <div class="nav__contents">
+      <nav class="navbar">
+        <h2>Panini Pande (1002064144)</h2>
+        <a href="/" class="nav__link">
+          <div class="home">
+            <img src="/static/home.png" alt="Home" class="home-icon">
+          </div>
+        </a>
+        <div class="cloud">
+          <img src="/static/cloud.png" alt="Home" class="home-cloud">
+        </div>
+      </nav>
+    </div>
+  </div>
+  
+
+  <div class="content">
+    <div class="main">
+    <table>
+      <tr>
+        <th><a href="/fetch_data1">piechart</a></th>
+      </tr>
+      <tr>
+        <th><a href="/fetch_data2">barchart</a></th>
+      </tr>
+      <tr>
+        <th><a href="/fetch_data3">drawchart</a></th>
+      </tr>
+      <tr>
+        <th><a href="/chart">chart</a></th>
+      </tr>
+      <tr>
+        <th><a href="/horizontalchart">Horizontal Chart</a></th>
+      </tr>
+      <tr>
+        <th><a href="/scatterchart">Scatter Chart</a></th>
+      </tr>
+    </table>
+  </div>
+  </div>
+</body>
+</html>

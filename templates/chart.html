@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+        font-family: 'Pacifico', cursive;
+			background-image: url("static/background1.webp");
+			background-size: cover;
+			background-color: white;}
+
+            #piechart {
+      width: 70%;
+      height: 90vh;
+      margin: 30px auto;
+    }
+.letter{
+        text-align: center;
+      }
+
+      input[type="text"] {
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+        outline: none;
+        background-color: white ;
+        outline: 2px solid #000; 
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+
+      .submit{
+        padding: 10px;
+        border: none;
+        border-radius: 20px;
+        background-color: #4caf50;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-left: 30px; /* Adjust the margin as needed */
+        margin-bottom: 200px;
+        margin-top: 20px;
+        display: inline-block; /* Display the button inline */
+      }
+
+      .submit:hover {
+        background-color: #45a049;
+      } 
+  </style>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+  <h1>Panini Pande(1002064144)</h1>
+  <label for="tuples">Enter tuples (letter, amount):</label>
+<input type="text" id="tuples"  />
+<button class="submit" onclick="generatePieChart()">Submit</button>
+</div>
+
+
+<div id="piechart"></div>
+
+
+<script type="text/javascript">
+google.charts.load("current", { packages: ["corechart"] });
+google.charts.setOnLoadCallback(drawChart);
+
+
+function generatePieChart() {
+  var input = document.getElementById("tuples").value;
+  var tuples = input.split(",");
+
+
+  if (tuples.length < 3 || tuples.length > 15) {
+    alert('Please enter between 3 and 15 tuples.');
+    return;
+  }
+ 
+  var data = [];
+  data.push(["Letter", "Amount"]);
+
+
+  var totalCount = 0;
+  for (var i = 0; i < tuples.length; i++) {
+    var tuple = tuples[i].trim().split(" ");
+    var letter = tuple[0];
+    var amount = parseInt(tuple[1]);
+
+
+    data.push([letter, amount]);
+    totalCount += amount;
+  }
+
+
+  var options = {
+    title: "Letter Amount",
+    pieHole: 0.4,
+    pieSliceText: "outside",
+    is3D: true,
+    slices: {
+      textStyle: {
+        color: "black",
+      },
+    },
+    chartArea: {
+      left: "10%",
+      top: "10%",
+      width: "80%",
+      height: "80%"
+    },
+    legend: {
+      position: "bottom",
+      alignment: "center",
+      textStyle: {
+        color: "black",
+        fontSize: 14
+      }
+    }
+  };
+
+
+  var chart = new google.visualization.PieChart(
+    document.getElementById("piechart")
+  );
+  chart.draw(google.visualization.arrayToDataTable(data), options);
+}
+</script>
+</body>
+</html>
+
+

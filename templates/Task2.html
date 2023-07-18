@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+			font-family: 'Pacifico', cursive;
+			background-image: url("static/background1.webp");
+			background-size: cover;
+			background-color: white; /* Fallback color in case the image fails to load */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+		}
+
+		h1 {
+			text-align: center;
+			margin-top: 40px;
+		}
+
+		table {
+			border-collapse: collapse;
+			margin: 40px auto;
+		}
+
+		th,
+		td {
+			border: 1px solid black;
+			padding: 16px;
+			text-align: center;
+		}
+
+		a {
+			text-decoration: none;
+			color: black;
+			font-weight: bold;
+			font-style: italic;
+		}
+
+    .index{
+      text-align: center;
+      margin-top: 200px;
+    }
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .navbar .home {
+      margin-left: auto;
+      margin-right: 10px; /* Adjust the right margin as needed */
+    }
+    .navbar-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 60px;
+      background-color: black;
+      color: #ffffff;
+      transition: background-color 0.3s ease;
+      opacity: 1;
+      z-index: 1;
+    }
+    
+    .nav__contents {
+      display: flex;
+      justify-content: center;
+    }
+    .home-icon {
+    position: fixed;
+    right: 20px;
+    cursor: pointer;
+    width: 30px;
+    background-color: white;
+    top: 20px;
+    transition-timing-function: ease-in;
+transform: all 0.5s;
+
+    }
+    .home-cloud{
+    position: fixed;
+    left: 20px;
+    width: 30px;
+    background-color: white;
+    top: 20px;
+    }
+    .barchart__parent{
+      display: flex;
+     align-items: center;
+     justify-content: center;
+     height: 100vh; 
+     width: 150vh;
+    }
+    #barchart{
+      width: 150%; /* Set the width to 75% of the parent container */
+  height: 75%; /* Set the height to 100% of the parent container */
+  mix-blend-mode: multiply;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar-container">
+    <div class="nav__contents">
+      <nav class="navbar">
+        <h2>Panini Pande (1002064144)</h2>
+        <a href="/" class="nav__link">
+          <div class="home">
+            <img src="/static/home.png" alt="Home" class="home-icon">
+          </div>
+        </a>
+        <div class="cloud">
+          <img src="/static/cloud.png" alt="Home" class="home-cloud">
+        </div>
+      </nav>
+    </div>
+  </div>
+
+<div class="barchart__parent">
+  <div id="barchart" style="mix-blend-mode: multiply;">
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', { packages: ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'S');
+      data.addColumn('number', 'T');
+    
+      {% for r in result1 %}
+      data.addRow(["{{ r[0] }} to {{ r[1] }}", {{ r[2] }}]);
+      {% endfor %}
+      data.sort([{ column:1, desc: false }]);
+    
+      var options = {
+  title: 'Data Distribution',
+  colors: ['#1FE7AD'], // Change the color to a darker shade, e.g., '#333'
+  chartArea: { width: '70%', height: '70%' },
+  hAxis: {
+    title: 'T',
+    minValue: 0,
+    textStyle: {
+      bold: true,
+      fontSize: 13,
+      color: 'black'
+    },
+    titleTextStyle: {
+      bold: true,
+      fontSize: 20,
+      color: 'black'
+    }
+  },
+  vAxis: {
+    title: 'S',
+    textStyle: {
+      fontSize: 14,
+      bold: true,
+      color: 'black'
+    },
+    titleTextStyle: {
+      fontSize: 20,
+      bold: true,
+      color: 'black'
+    }
+  }
+};
+
+      
+      var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+      chart.draw(data, options);
+    }
+  </script>
+  </div>
+</div>
+</body>
+</html>
